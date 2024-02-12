@@ -1,0 +1,1 @@
+Exercícios feitos nas aulas de Sistemas Operativos, bem como exercícios de estudo em casa
