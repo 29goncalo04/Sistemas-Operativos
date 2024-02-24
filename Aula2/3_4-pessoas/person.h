@@ -15,4 +15,6 @@ int list(int n);
 
 int update(char* name, int new_age);
 
+int update2(int position, int new_age);
+
 #endif

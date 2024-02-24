@@ -20,9 +20,9 @@ int main(int argc, char* argv[]){
 
     if ( strcmp(argv[1],"-l") == 0 ) list(atoi(argv[2]));
 
-    if ( strcmp(argv[1],"-u") == 0 ){}
+    if ( strcmp(argv[1],"-u") == 0 ) update(argv[2], atoi(argv[3]));
 
-    if ( strcmp(argv[1],"-o") == 0 ){}
+    if ( strcmp(argv[1],"-o") == 0 ) update2(atoi(argv[2]), atoi(argv[3]));
 
     return 0;
 }
