@@ -7,26 +7,39 @@
 // TO DO
 
 int add(char* name, int age){
-
-    int ret = 0;
     Person p;
-    p.age = age;
     strcpy(p.name, name);
-
-    int fd = open(DB, O_WRONLY | O_CREAT | O_APPEND, 0640);
-    if(fd == -1){
+    p.age = age;
+    int file = open(DB, O_WRONLY | O_CREAT | O_TRUNC, 0600);
+    if(file == -1){
         perror("open");
-        ret = -1;
+        return -1;
     }
-    
-    if(write(fd, &p, sizeof(Person)) == -1){
+    if(write(file, &p, sizeof(Person)) == -1){
         perror("write");
-        ret = -1;
+        return -1;
     }
-
-    close(fd);
-    return ret;
+    close(file);
+    return 0;
 }
+
+// int add(char* name, int age){
+//     int ret = 0;
+//     Person p;
+//     p.age = age;
+//     strcpy(p.name, name);
+//     int fd = open(DB, O_WRONLY | O_CREAT | O_APPEND, 0640);
+//     if(fd == -1){
+//         perror("open");
+//         ret = -1;
+//     }
+//     if(write(fd, &p, sizeof(Person)) == -1){
+//         perror("write");
+//         ret = -1;
+//     }
+//     close(fd);
+//     return ret;
+// }
 
 int list(int n){
     int fd = open(DB, O_RDONLY);
