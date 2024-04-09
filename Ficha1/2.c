@@ -8,7 +8,7 @@ int main(int argc, char* argv[]){
     int file1 = open(argv[1], O_CREAT | O_RDONLY,0600);
     int file2 = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0600);
     int bytes_read;
-    while((bytes_read = read(file1, buffer, 100) > 0)){
+    while((bytes_read = read(file1, buffer, 100)) > 0){
         write(file2, buffer, bytes_read);
     }
     close(file1);
