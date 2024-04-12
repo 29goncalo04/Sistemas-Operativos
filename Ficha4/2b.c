@@ -30,7 +30,7 @@ int main (int argc, char* argv[]) {
     else {
         // pai
         close (pd[1]);
-        // sleep (4);  // b)
+        sleep (4);  // b)
         int num_read, bytes_read;
         while ((bytes_read = read (pd[0], &num_read, sizeof(int))) > 0) {
             printf ("[PAI]: li %d do pipe\n", num_read);

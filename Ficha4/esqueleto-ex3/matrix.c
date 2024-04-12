@@ -32,24 +32,62 @@ void printMatrix(int **matrix) {
 }
 
 void lookupNumber(int** matrix, int value, int* vector){
-    int p[2], pid;
-    pipe(p);
-    for(int r = 0; r<ROWS; r++){
-        if((pid = fork()) == 0){
+    int file[2];
+    if(pipe(file) == -1){
+        perror("pipe");
+        return;
+    }
+    for(int i = 0; i<ROWS; i++){
+        pid_t pid = fork();
+        if(pid == -1){
+            perror("fork");
+            return;
+        }
+        if(pid == 0){
+            //printf("lalalalala ");
+            close(file[0]);
             Minfo m;
-            m.line_nr = r;
+            m.line_nr = i;
             m.ocur_nr = 0;
             for(int j = 0; j<COLUMNS; j++){
-                if(matrix[r][j] == value) m.ocur_nr++;
+                if(matrix[i][j] == value) m.ocur_nr ++;
             }
-            write(p[1], &m, sizeof(Minfo));
-            close(p[1]);
+            write(file[1], &m, sizeof(Minfo));
+            close(file[1]);
             _exit(0);
         }
     }
-    close(p[1]);
-    Minfo resp;
-    while(read(p[0], &resp, sizeof(Minfo)) > 0){
-        vector[resp.line_nr] = resp.ocur_nr;
+    close(file[1]);
+    Minfo res;
+    while(read(file[0], &res, sizeof(Minfo)) > 0){
+        vector[res.line_nr] = res.ocur_nr;
     }
+    close(file[0]);
+    wait(NULL);
 }
+
+// void lookupNumber(int** matrix, int value, int* vector){
+//     int p[2], pid;
+//     pipe(p);
+//     for(int r = 0; r<ROWS; r++){
+//         if((pid = fork()) == 0){
+//             close(p[0]);
+//             Minfo m;
+//             m.line_nr = r;
+//             m.ocur_nr = 0;
+//             for(int j = 0; j<COLUMNS; j++){
+//                 if(matrix[r][j] == value) m.ocur_nr++;
+//             }
+//             write(p[1], &m, sizeof(Minfo));
+//             close(p[1]);
+//             _exit(0);
+//         }
+//     }
+//     close(p[1]);
+//     Minfo resp;
+//     while(read(p[0], &resp, sizeof(Minfo)) > 0){
+//         vector[resp.line_nr] = resp.ocur_nr;
+//     }
+//     close(p[0]);
+//     wait(NULL);
+// }
