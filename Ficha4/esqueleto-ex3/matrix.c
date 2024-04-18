@@ -44,7 +44,6 @@ void lookupNumber(int** matrix, int value, int* vector){
             return;
         }
         if(pid == 0){
-            //printf("lalalalala ");
             close(file[0]);
             Minfo m;
             m.line_nr = i;
