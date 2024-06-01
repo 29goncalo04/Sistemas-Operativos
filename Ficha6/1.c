@@ -3,8 +3,8 @@
 
 int main(int argc, char* argv[]){
     int input = open("/etc/passwd", O_RDONLY);
-    int output = open("saida.txt", O_CREATE | O_WRONLY | O_TRUNC, 0600);
-    int error = open("erros.txt", O_CREATE | O_WRONLY | O_TRUNC, 0600);
+    int output = open("saida.txt", O_CREAT | O_WRONLY | O_TRUNC, 0600);
+    int error = open("erros.txt", O_CREAT | O_WRONLY | O_TRUNC, 0600);
     int out = dup(1);
     dup2(input, 0);
     close(input);
